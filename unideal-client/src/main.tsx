@@ -1,17 +1,11 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import { ClerkProvider } from "@clerk/clerk-react"
+import { AuthProvider } from "./contexts/AuthContext"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { QueryDevtools } from "./QueryDevtools"
 import { Toaster } from "sonner"
 import { App } from "./app/App"
 import "./styles/globals.css"
-
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
-
-if (!PUBLISHABLE_KEY) {
-  console.warn("⚠️  VITE_CLERK_PUBLISHABLE_KEY is not set — auth will not work")
-}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,7 +21,7 @@ if (!rootEl) throw new Error("Root element not found")
 
 createRoot(rootEl).render(
   <StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY ?? ""}>
+    <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <App />
         <Toaster
@@ -44,6 +38,6 @@ createRoot(rootEl).render(
         />
         <QueryDevtools />
       </QueryClientProvider>
-    </ClerkProvider>
+    </AuthProvider>
   </StrictMode>
 )

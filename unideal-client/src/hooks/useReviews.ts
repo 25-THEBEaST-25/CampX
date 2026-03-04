@@ -3,7 +3,7 @@
 // ============================================
 
 import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@/contexts/AuthContext"
 import { api } from "@/lib/api"
 import type { Review, ReviewsResponse, CreateReviewInput } from "@/types"
 

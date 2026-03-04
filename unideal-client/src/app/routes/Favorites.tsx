@@ -6,7 +6,7 @@ import { useEffect, useRef, useMemo } from "react"
 import { Link } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Heart, Package, Loader2, AlertCircle } from "lucide-react"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@/contexts/AuthContext"
 
 import { Button } from "@/components/ui/button"
 import { ItemGrid } from "@/components/items/ItemGrid"

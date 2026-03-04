@@ -1,5 +1,5 @@
 // ============================================
-// API Client — Clerk-authenticated fetch wrapper
+// API Client — Cookie-authenticated fetch wrapper
 // ============================================
 
 import { buildSearchParams } from "@/lib/utils"
@@ -17,36 +17,69 @@ export class ApiError extends Error {
 
 class ApiClient {
   private baseUrl: string
-  private getToken: (() => Promise<string | null>) | null = null
+  private isRefreshing = false
+  private refreshPromise: Promise<boolean> | null = null
 
   constructor() {
     this.baseUrl = import.meta.env.VITE_API_URL ?? "http://localhost:5001"
   }
 
   /**
-   * Registers the Clerk token getter. Call this once inside a
-   * React component tree that has access to `useAuth()`.
+   * Attempt to refresh the access token using the refresh_token cookie.
+   * Returns true if successful, false otherwise.
    */
-  setTokenGetter(getter: () => Promise<string | null>) {
-    this.getToken = getter
+  private async tryRefresh(): Promise<boolean> {
+    // De-duplicate concurrent refresh attempts
+    if (this.isRefreshing && this.refreshPromise) {
+      return this.refreshPromise
+    }
+
+    this.isRefreshing = true
+    this.refreshPromise = (async () => {
+      try {
+        const res = await fetch(`${this.baseUrl}/api/auth/refresh`, {
+          method: "POST",
+          credentials: "include",
+        })
+        return res.ok
+      } catch {
+        return false
+      } finally {
+        this.isRefreshing = false
+        this.refreshPromise = null
+      }
+    })()
+
+    return this.refreshPromise
   }
 
   private async request<T>(
     path: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
+    isRetry = false
   ): Promise<T> {
-    const token = this.getToken ? await this.getToken() : null
-
     const headers: HeadersInit = {
       "Content-Type": "application/json",
-      ...(token && { Authorization: `Bearer ${token}` }),
       ...(options.headers as Record<string, string>),
     }
 
     const response = await fetch(`${this.baseUrl}${path}`, {
       ...options,
       headers,
+      credentials: "include",
     })
+
+    // Auto-refresh on 401 (but not for auth endpoints and not on retry)
+    if (
+      response.status === 401 &&
+      !isRetry &&
+      !path.startsWith("/api/auth/")
+    ) {
+      const refreshed = await this.tryRefresh()
+      if (refreshed) {
+        return this.request<T>(path, options, true)
+      }
+    }
 
     if (!response.ok) {
       const errorBody = await response.json().catch(() => ({
@@ -88,7 +121,7 @@ class ApiClient {
   post<T>(path: string, body?: unknown): Promise<T> {
     return this.request<T>(path, {
       method: "POST",
-      body: JSON.stringify(body),
+      body: body !== undefined ? JSON.stringify(body) : undefined,
     })
   }
 
@@ -114,5 +147,5 @@ class ApiClient {
   }
 }
 
-/** Singleton API client — configure token getter via `useApiInit()` hook */
+/** Singleton API client — uses httpOnly cookies for auth */
 export const api = new ApiClient()

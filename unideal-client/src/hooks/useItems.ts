@@ -69,10 +69,13 @@ export function useItem(id: string | undefined) {
 export function useMyItems(status?: string) {
   return useQuery<Item[]>({
     queryKey: ["myItems", status],
-    queryFn: () =>
-      api.get<Item[]>("/api/users/me/items", {
-        params: status ? { status } : undefined,
-      }),
+    queryFn: async () => {
+      const res = await api.get<{ items: Item[]; nextCursor: string | null; hasMore: boolean }>(
+        "/api/users/me/items",
+        { params: status ? { status } : undefined }
+      )
+      return res.items
+    },
   })
 }
 

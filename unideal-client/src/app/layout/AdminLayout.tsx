@@ -1,5 +1,5 @@
 import { Outlet, NavLink, Navigate } from "react-router-dom"
-import { useUser } from "@clerk/clerk-react"
+import { useAuth } from "@/contexts/AuthContext"
 import {
   LayoutDashboard,
   ShieldCheck,
@@ -35,10 +35,10 @@ const navItems = [
  * Renders a sidebar-based shell for admin pages.
  */
 export function AdminLayout() {
-  const { user, isLoaded } = useUser()
+  const { user, isLoading } = useAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  if (!isLoaded) {
+  if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center bg-background">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
@@ -46,8 +46,8 @@ export function AdminLayout() {
     )
   }
 
-  // Gate: only users with isAdmin metadata can access
-  const isAdmin = user?.publicMetadata?.isAdmin === true
+  // Gate: only users with isAdmin flag can access
+  const isAdmin = user?.isAdmin === true
   if (!isAdmin) {
     return <Navigate to="/" replace />
   }
@@ -109,13 +109,13 @@ export function AdminLayout() {
       {/* Admin identity footer */}
       <div className="flex items-center gap-3 p-4">
         <Avatar className="h-8 w-8">
-          <AvatarImage src={user?.imageUrl} />
-          <AvatarFallback>{user?.firstName?.[0] ?? "A"}</AvatarFallback>
+          <AvatarImage src={user?.avatarUrl ?? undefined} />
+          <AvatarFallback>{user?.fullName?.[0] ?? "A"}</AvatarFallback>
         </Avatar>
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium">{user?.fullName ?? "Admin"}</p>
           <p className="truncate text-xs text-muted-foreground">
-            {user?.primaryEmailAddress?.emailAddress}
+            {user?.email}
           </p>
         </div>
         <Button

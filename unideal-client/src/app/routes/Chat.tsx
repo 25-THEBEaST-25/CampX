@@ -4,7 +4,7 @@
 
 import { useCallback, useMemo } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { useUser } from "@clerk/clerk-react"
+import { useAuth } from "@/contexts/AuthContext"
 import { motion, AnimatePresence } from "framer-motion"
 import { MessageCircle, ArrowLeft, ShieldCheck, Package } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
@@ -30,7 +30,7 @@ import type { Conversation, MessageType } from "@/types"
 export function Chat() {
   const { id: activeConversationId } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { user } = useUser()
+  const { user } = useAuth()
   const currentUserId = user?.id ?? ""
 
   // ── Data fetching ──────────────────────────────────────────────────────────

@@ -5,7 +5,7 @@
 import { useState, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { useUser } from "@clerk/clerk-react"
+import { useAuth } from "@/contexts/AuthContext"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -81,7 +81,7 @@ const slideVariants = {
 
 export function Onboarding() {
   const navigate = useNavigate()
-  const { user: clerkUser } = useUser()
+  const { user, refreshUser } = useAuth()
   const { mutateAsync: submitOnboarding, isPending: isSubmitting } =
     useOnboarding()
   const { data: colleges, isLoading: collegesLoading } = useColleges()
@@ -94,7 +94,7 @@ export function Onboarding() {
   const profileForm = useForm<ProfileValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      fullName: clerkUser?.fullName ?? "",
+      fullName: user?.fullName ?? "",
       phone: "",
     },
   })
@@ -102,7 +102,7 @@ export function Onboarding() {
   // Step 2 form
   const collegeForm = useForm<CollegeValues>({
     resolver: zodResolver(collegeSchema),
-    defaultValues: { collegeId: "" },
+    defaultValues: { collegeId: user?.collegeId ?? "" },
   })
 
   /** Validate current step and advance */
@@ -138,17 +138,15 @@ export function Onboarding() {
         avatarUrl: avatar[0]?.url,
       })
 
-      // Update Clerk public metadata so ProtectedRoute stops redirecting
-      await clerkUser?.update({
-        unsafeMetadata: { onboardingComplete: true },
-      })
+      // Re-fetch /me so AuthContext picks up onboardingComplete: true
+      await refreshUser()
 
       toast.success("Welcome to Unideal! 🎉")
       navigate(ROUTES.BROWSE, { replace: true })
     } catch {
       toast.error("Something went wrong. Please try again.")
     }
-  }, [profileForm, collegeForm, avatar, submitOnboarding, clerkUser, navigate])
+  }, [profileForm, collegeForm, avatar, submitOnboarding, refreshUser, navigate])
 
   return (
     <div className="mx-auto flex min-h-[70vh] max-w-lg flex-col items-center justify-center px-4 py-10">

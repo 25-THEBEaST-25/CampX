@@ -19,7 +19,7 @@ import {
   Loader2,
 } from "lucide-react"
 import { toast } from "sonner"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@/contexts/AuthContext"
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"

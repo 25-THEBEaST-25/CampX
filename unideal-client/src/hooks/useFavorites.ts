@@ -9,7 +9,7 @@ import {
   type InfiniteData,
 } from "@tanstack/react-query"
 import { api } from "@/lib/api"
-import { useAuth } from "@clerk/clerk-react"
+import { useAuth } from "@/contexts/AuthContext"
 import type { Item, PaginatedResponse } from "@/types"
 
 /** Fetches the user's favorited items (paginated) */

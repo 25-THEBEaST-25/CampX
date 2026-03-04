@@ -1,5 +1,5 @@
-import { NavLink } from "react-router-dom"
-import { useAuth, useUser, SignInButton } from "@clerk/clerk-react"
+import { Link, NavLink } from "react-router-dom"
+import { useAuth } from "@/contexts/AuthContext"
 import {
   Sheet,
   SheetContent,
@@ -41,12 +41,9 @@ const LINKS = [
 
 /** Slide-out mobile navigation drawer */
 export function MobileNav({ open, onClose }: MobileNavProps) {
-  const { isSignedIn } = useAuth()
-  const { user } = useUser()
+  const { isAuthenticated, user } = useAuth()
 
-  const verificationStatus =
-    (user?.publicMetadata as { verificationStatus?: string })
-      ?.verificationStatus ?? "UNVERIFIED"
+  const verificationStatus = user?.verificationStatus ?? "UNVERIFIED"
 
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
@@ -57,10 +54,10 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
           </SheetTitle>
         </SheetHeader>
 
-        {isSignedIn && user && (
+        {isAuthenticated && user && (
           <div className="flex items-center gap-3 px-6 pb-4">
             <Avatar className="h-10 w-10">
-              <AvatarImage src={user.imageUrl} alt={user.fullName ?? ""} />
+              <AvatarImage src={user.avatarUrl ?? undefined} alt={user.fullName ?? ""} />
               <AvatarFallback>
                 {(user.fullName ?? "U").slice(0, 1).toUpperCase()}
               </AvatarFallback>
@@ -70,7 +67,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
                 {user.fullName}
               </p>
               <p className="truncate text-xs text-muted-foreground">
-                {user.primaryEmailAddress?.emailAddress}
+                {user.email}
               </p>
             </div>
             <VerificationBadge
@@ -106,7 +103,7 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
         <Separator />
 
         <div className="p-4">
-          {isSignedIn ? (
+          {isAuthenticated ? (
             <NavLink to={ROUTES.SELL} onClick={onClose}>
               <Button className="w-full gap-2">
                 <Plus size={16} />
@@ -114,9 +111,9 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
               </Button>
             </NavLink>
           ) : (
-            <SignInButton mode="modal">
+            <Link to={ROUTES.SIGN_IN} onClick={onClose}>
               <Button className="w-full">Sign In</Button>
-            </SignInButton>
+            </Link>
           )}
         </div>
       </SheetContent>

@@ -1,8 +1,16 @@
 import { Link, NavLink, useNavigate } from "react-router-dom"
-import { useAuth, useUser, SignInButton, UserButton } from "@clerk/clerk-react"
+import { useAuth } from "@/contexts/AuthContext"
 import { motion } from "framer-motion"
-import { Menu, Plus } from "lucide-react"
+import { LogOut, Menu, Plus, Settings, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { VerificationBadge } from "@/components/ui/VerificationBadge"
 import { NotificationBell } from "@/components/notifications/NotificationBell"
 import { MobileNav } from "./MobileNav"
@@ -18,14 +26,11 @@ const NAV_LINKS = [
 
 /** Top navigation bar — responsive, auth-aware */
 export function Navbar() {
-  const { isSignedIn, isLoaded } = useAuth()
-  const { user } = useUser()
+  const { isAuthenticated, isLoading, user, logout } = useAuth()
   const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const verificationStatus =
-    (user?.publicMetadata as { verificationStatus?: string })
-      ?.verificationStatus ?? "UNVERIFIED"
+  const verificationStatus = user?.verificationStatus ?? "UNVERIFIED"
 
   return (
     <>
@@ -46,7 +51,7 @@ export function Navbar() {
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-1">
-            {isSignedIn &&
+            {isAuthenticated &&
               NAV_LINKS.map((link) => (
                 <NavLink
                   key={link.href}
@@ -66,7 +71,7 @@ export function Navbar() {
 
           {/* Right side actions */}
           <div className="flex items-center gap-2">
-            {isLoaded && isSignedIn ? (
+            {!isLoading && isAuthenticated ? (
               <>
                 {/* Sell button */}
                 <Button
@@ -89,27 +94,53 @@ export function Navbar() {
                   size="sm"
                 />
 
-                {/* Clerk user button (avatar + dropdown) */}
-                <UserButton
-                  appearance={{
-                    elements: {
-                      avatarBox: "w-9 h-9 rounded-full ring-2 ring-border",
-                    },
-                  }}
-                />
+                {/* User avatar dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="rounded-full ring-2 ring-border focus:outline-none focus:ring-primary">
+                      <Avatar className="h-9 w-9">
+                        <AvatarImage src={user?.avatarUrl ?? undefined} alt={user?.fullName ?? ""} />
+                        <AvatarFallback>
+                          {(user?.fullName ?? "U")[0].toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem onClick={() => navigate(ROUTES.PROFILE(user?.id ?? ""))}>
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate(ROUTES.SETTINGS)}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      className="text-destructive focus:text-destructive"
+                      onClick={async () => {
+                        await logout()
+                        navigate(ROUTES.HOME)
+                      }}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </>
-            ) : isLoaded ? (
+            ) : !isLoading ? (
               <>
-                <SignInButton mode="modal">
+                <Link to={ROUTES.SIGN_IN}>
                   <Button variant="ghost" size="sm">
                     Sign In
                   </Button>
-                </SignInButton>
-                <SignInButton mode="modal">
+                </Link>
+                <Link to={ROUTES.SIGN_UP}>
                   <Button size="sm">
                     Get Started
                   </Button>
-                </SignInButton>
+                </Link>
               </>
             ) : null}
 

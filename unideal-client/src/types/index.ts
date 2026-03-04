@@ -63,7 +63,6 @@ export interface College {
 
 export interface UserProfile {
   id: string
-  clerkId: string
   email: string
   fullName: string
   phone?: string
