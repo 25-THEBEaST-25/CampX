@@ -1,10 +1,10 @@
-# Unideal — Global Copilot Instructions
+# CampX — Global Copilot Instructions
 
-You are working on **Unideal**, a hyper-local, trust-first, peer-to-peer campus marketplace for university students.
+You are working on **CampX**, a hyper-local, trust-first, peer-to-peer campus marketplace for university students.
 
 ## Quick Context
 
-- **Two repos**: `unideal-client` (React + Vite + TypeScript → Vercel) and `unideal-server` (Express + TypeScript + Prisma → Railway)
+- **Two repos**: `campx-client` (React + Vite + TypeScript → Vercel) and `campx-server` (Express + TypeScript + Prisma → Railway)
 - **Database**: PostgreSQL 16 on Railway, managed via Prisma ORM (14 models)
 - **Auth**: Clerk (Google OAuth + email/password)
 - **Payments**: Razorpay escrow (test mode) — funds held until buyer confirms receipt
@@ -26,8 +26,8 @@ This project uses 3 agents working in parallel:
 
 | Agent | Scope | Instruction File |
 |---|---|---|
-| **Agent F** (Frontend) | `unideal-client` repo — UI, components, pages, hooks | `.agents/frontend-agent.md` |
-| **Agent B** (Backend) | `unideal-server` repo — API, database, services, middleware | `.agents/backend-agent.md` |
+| **Agent F** (Frontend) | `campx-client` repo — UI, components, pages, hooks | `.agents/frontend-agent.md` |
+| **Agent B** (Backend) | `campx-server` repo — API, database, services, middleware | `.agents/backend-agent.md` |
 | **Agent A** (Admin) | Both repos — admin panel, deployment, cross-repo coordination | `.agents/admin-agent.md` |
 
 **Before starting any task, load the corresponding agent file for your role.**

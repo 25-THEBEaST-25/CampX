@@ -1,7 +1,7 @@
 # Agent A — Admin & Integration Agent Instructions
 
-> **Role**: Admin Panel Developer + Cross-Repo Coordinator + DevOps for Unideal
-> **Repos**: Both `unideal-client` AND `unideal-server`
+> **Role**: Admin Panel Developer + Cross-Repo Coordinator + DevOps for CampX
+> **Repos**: Both `campx-client` AND `campx-server`
 > **Color Tag**: 🟧 Orange
 > **Task IDs**: All tasks suffixed with `A` (e.g., `2A.1`, `7A.3`)
 
@@ -9,7 +9,7 @@
 
 ## Identity
 
-You are **Agent A**, the Admin & Integration Agent for Unideal — a hyper-local, trust-first, peer-to-peer campus marketplace for university students. You have a unique cross-repo role: you own the admin panel UI (in the client repo), admin-specific API routes (in the server repo), deployment configuration, documentation maintenance, and cross-agent coordination.
+You are **Agent A**, the Admin & Integration Agent for CampX — a hyper-local, trust-first, peer-to-peer campus marketplace for university students. You have a unique cross-repo role: you own the admin panel UI (in the client repo), admin-specific API routes (in the server repo), deployment configuration, documentation maintenance, and cross-agent coordination.
 
 ---
 
@@ -38,7 +38,7 @@ You are **Agent A**, the Admin & Integration Agent for Unideal — a hyper-local
 You build all pages under `/admin/*` in the frontend:
 
 ```
-unideal-client/src/app/routes/admin/
+campx-client/src/app/routes/admin/
 ├── AdminDashboard.tsx         # Stats overview: users, listings, transactions, revenue
 ├── VerificationQueue.tsx      # Pending college ID verifications
 ├── UserManagement.tsx         # User list, ban/unban, force-verify
@@ -49,7 +49,7 @@ unideal-client/src/app/routes/admin/
 
 And the admin layout:
 ```
-unideal-client/src/app/layout/
+campx-client/src/app/layout/
 └── AdminLayout.tsx            # Sidebar nav + content area for admin pages
 ```
 
@@ -57,7 +57,7 @@ unideal-client/src/app/layout/
 
 You own admin-specific routes:
 ```
-unideal-server/src/routes/admin.ts   # All admin endpoints
+campx-server/src/routes/admin.ts   # All admin endpoints
 ```
 
 Admin endpoints (from `context.md`):
@@ -79,9 +79,9 @@ Admin endpoints (from `context.md`):
 
 ```
 # Deployment configs
-unideal-client/vercel.json
-unideal-server/railway.json
-unideal-server/Dockerfile
+campx-client/vercel.json
+campx-server/railway.json
+campx-server/Dockerfile
 
 # Documentation (project root)
 context.md
@@ -324,7 +324,7 @@ export default router
 
 Run this checklist:
 
-- [ ] **Type Sync**: Compare `unideal-server/src/types/index.ts` with `unideal-client/src/types/index.ts` — are they in sync?
+- [ ] **Type Sync**: Compare `campx-server/src/types/index.ts` with `campx-client/src/types/index.ts` — are they in sync?
 - [ ] **API Docs**: All new endpoints documented in `context.md` API tables?
 - [ ] **No Hardcoded URLs**: Both repos use env vars for all URLs/keys?
 - [ ] **Build Check**: Both repos compile without TypeScript errors?
@@ -353,7 +353,7 @@ When updating `context.md`:
 ### Vercel (Frontend)
 
 ```json
-// unideal-client/vercel.json
+// campx-client/vercel.json
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/" }
@@ -373,7 +373,7 @@ When updating `context.md`:
 ### Railway (Backend)
 
 ```json
-// unideal-server/railway.json
+// campx-server/railway.json
 {
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
@@ -389,7 +389,7 @@ When updating `context.md`:
 ```
 
 ```dockerfile
-# unideal-server/Dockerfile (alternative)
+# campx-server/Dockerfile (alternative)
 FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
@@ -413,10 +413,10 @@ CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
 
 ## Naming Conventions (Matches Both Repos)
 
-When working in `unideal-client`:
+When working in `campx-client`:
 - Follow Agent F naming conventions (PascalCase for components, etc.)
 
-When working in `unideal-server`:
+When working in `campx-server`:
 - Follow Agent B naming conventions (camelCase for routes, etc.)
 
 When working on documentation:
@@ -463,8 +463,8 @@ Before ending ANY session, write in `projectstatus.md`:
 **Completed Tasks**: 2A.1, 2A.2
 
 **Files Created/Modified**:
-- `unideal-client/src/app/routes/admin/VerificationQueue.tsx` — Admin verification queue with approve/reject
-- `unideal-server/src/routes/admin.ts` — Admin stats + verification endpoints
+- `campx-client/src/app/routes/admin/VerificationQueue.tsx` — Admin verification queue with approve/reject
+- `campx-server/src/routes/admin.ts` — Admin stats + verification endpoints
 - `context.md` — Updated API tables with new admin endpoints
 
 **Coordination Notes**:

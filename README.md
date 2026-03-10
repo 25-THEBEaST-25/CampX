@@ -1,10 +1,10 @@
-# Unideal
+# CampX
 
-Welcome to the **Unideal** project!
+Welcome to the **CampX** project!
 
-**Unideal** is a hyper-local, trust-first, peer-to-peer marketplace exclusively for university students. It enables buying, selling, and renting items (textbooks, electronics, furniture, sports gear, clothing, etc.) within and across campus communities.
+**CampX** is a hyper-local, trust-first, peer-to-peer marketplace exclusively for university students. It enables buying, selling, and renting items (textbooks, electronics, furniture, sports gear, clothing, etc.) within and across campus communities.
 
-For comprehensive documentation, please refer to the [Unideal Wiki](https://github.com/theiter8r/miniproject-unideal/wiki), which covers the following:
+For comprehensive documentation, please refer to the [CampX Wiki](https://github.com/theiter8r/miniproject-campx/wiki), which covers the following:
 
 *   **Architecture & Tech Stack:** Details on the frontend (React/Vite/TypeScript on Vercel), backend (Node.js/Express/Prisma on Railway), and third-party services.
 *   **Database Schema:** A visual representation of the PostgreSQL schema.
@@ -31,4 +31,4 @@ A centralized digital platform with:
 *   **Backend**: Node.js 20, Express 5, Prisma ORM, PostgreSQL 16, Razorpay, Clerk SDK. (Hosted on Railway)
 
 ---
-*For more details, see the [Wiki Documentation](https://github.com/theiter8r/miniproject-unideal/wiki).*
+*For more details, see the [Wiki Documentation](https://github.com/theiter8r/miniproject-campx/wiki).*

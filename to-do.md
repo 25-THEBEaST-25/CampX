@@ -1,4 +1,4 @@
-# Unideal — Phase-Wise Plan & To-Do
+# CampX — Phase-Wise Plan & To-Do
 
 > **Last Updated**: 2026-02-26
 > **Total Phases**: 8
@@ -30,7 +30,7 @@
 
 ### Backend Tasks (Agent B)
 
-- [ ] **1B.1** Initialize `unideal-server` repo with Express 5 + TypeScript
+- [ ] **1B.1** Initialize `campx-server` repo with Express 5 + TypeScript
   - `package.json` with all dependencies
   - `tsconfig.json` with strict mode
   - `src/index.ts` — Express app with CORS, Helmet, JSON parsing, rate limiting, error handler
@@ -67,7 +67,7 @@
 
 ### Frontend Tasks (Agent F)
 
-- [ ] **1F.1** Initialize `unideal-client` repo with Vite + React + TypeScript
+- [ ] **1F.1** Initialize `campx-client` repo with Vite + React + TypeScript
   - `package.json` with all dependencies (shadcn deps, framer-motion, tanstack query, clerk, etc.)
   - `tsconfig.json` + `vite.config.ts` (path aliases: `@/*` → `src/*`)
   - `tailwind.config.ts` + `postcss.config.js`
@@ -160,7 +160,7 @@
 
 - [ ] **2F.1** Onboarding page (`/onboarding`)
   - Multi-step form with Framer Motion transitions
-  - Step 1: "Welcome to Unideal!" — enter full name + phone
+  - Step 1: "Welcome to CampX!" — enter full name + phone
   - Step 2: Select college from dropdown (fetched from API)
   - Step 3: Upload avatar (optional, Cloudinary widget)
   - Step 4: Success → redirect to Home
@@ -750,7 +750,7 @@
 ### Deployment Tasks (Agent A)
 
 - [ ] **8A.1** Deploy frontend to Vercel
-  - Push `unideal-client` to GitHub
+  - Push `campx-client` to GitHub
   - Connect to Vercel
   - Set environment variables
   - Configure `vercel.json` for SPA rewrites
@@ -758,7 +758,7 @@
   - Set up preview deployments for PRs
 
 - [ ] **8A.2** Deploy backend to Railway
-  - Push `unideal-server` to GitHub
+  - Push `campx-server` to GitHub
   - Create Railway project with PostgreSQL addon
   - Set environment variables (DATABASE_URL from Railway, all API keys)
   - Configure `railway.json` (build + start commands)
@@ -768,7 +768,7 @@
 
 - [ ] **8A.3** Configure production services
   - Clerk: add production Vercel domain to allowed origins
-  - Cloudinary: create upload presets (unideal-items, unideal-avatars, unideal-ids)
+  - Cloudinary: create upload presets (campx-items, campx-avatars, campx-ids)
   - Ably: production app key
   - Razorpay: test mode keys (switch to live when ready)
   - Mapbox: add production domain to allowed URLs

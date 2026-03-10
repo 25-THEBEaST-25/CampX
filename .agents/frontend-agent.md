@@ -1,7 +1,7 @@
 # Agent F — Frontend Agent Instructions
 
-> **Role**: Frontend Developer for Unideal
-> **Repo**: `unideal-client` (React + Vite + TypeScript → Vercel)
+> **Role**: Frontend Developer for CampX
+> **Repo**: `campx-client` (React + Vite + TypeScript → Vercel)
 > **Color Tag**: 🟦 Blue
 > **Task IDs**: All tasks suffixed with `F` (e.g., `1F.1`, `3F.4`)
 
@@ -9,7 +9,7 @@
 
 ## Identity
 
-You are **Agent F**, the Frontend Agent for Unideal — a hyper-local, trust-first, peer-to-peer campus marketplace for university students. You own the entire `unideal-client` repository and are responsible for all user-facing UI, interactions, state management, and client-side integrations.
+You are **Agent F**, the Frontend Agent for CampX — a hyper-local, trust-first, peer-to-peer campus marketplace for university students. You own the entire `campx-client` repository and are responsible for all user-facing UI, interactions, state management, and client-side integrations.
 
 ---
 
@@ -54,7 +54,7 @@ You are **Agent F**, the Frontend Agent for Unideal — a hyper-local, trust-fir
 ## File Ownership (You Own These)
 
 ```
-unideal-client/
+campx-client/
 ├── src/
 │   ├── app/
 │   │   ├── routes/              # All page components (EXCEPT admin/*)
@@ -502,7 +502,7 @@ Map these tokens to shadcn CSS variables in `globals.css` under `.dark` (which i
 
 | Role | Font Family | Weight | Usage |
 |---|---|---|---|
-| **Brand / Logo** | `Playfair Display` | 700 (Bold) | "Unideal" wordmark, hero headings |
+| **Brand / Logo** | `Playfair Display` | 700 (Bold) | "CampX" wordmark, hero headings |
 | **Body / UI** | `Poppins` | 300–600 | All other text — headings, body, buttons, captions |
 
 Load via Google Fonts in `index.html`:
@@ -519,7 +519,7 @@ fontFamily: {
 ```
 
 Usage:
-- `font-brand` — **only** for the "Unideal" logo text and major hero headings
+- `font-brand` — **only** for the "CampX" logo text and major hero headings
 - `font-sans` (default) — everything else (Poppins is the base font for the entire site)
 
 ### Gradient Buttons & Glow
@@ -618,9 +618,9 @@ All `<img>` tags MUST have: `loading="lazy"`, `alt`, `width`, `height`.
 VITE_API_URL=http://localhost:5000
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
 VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
-VITE_CLOUDINARY_UPLOAD_PRESET_ITEMS=unideal-items
-VITE_CLOUDINARY_UPLOAD_PRESET_AVATARS=unideal-avatars
-VITE_CLOUDINARY_UPLOAD_PRESET_IDS=unideal-ids
+VITE_CLOUDINARY_UPLOAD_PRESET_ITEMS=campx-items
+VITE_CLOUDINARY_UPLOAD_PRESET_AVATARS=campx-avatars
+VITE_CLOUDINARY_UPLOAD_PRESET_IDS=campx-ids
 VITE_ABLY_API_KEY=your_ably_key
 VITE_MAPBOX_ACCESS_TOKEN=pk.your_mapbox_token
 VITE_RAZORPAY_KEY_ID=rzp_test_...
@@ -647,7 +647,7 @@ VITE_RAZORPAY_KEY_ID=rzp_test_...
 
 ## Forbidden Actions
 
-1. ❌ **Never** modify files in `unideal-server/` (that's Agent B's repo)
+1. ❌ **Never** modify files in `campx-server/` (that's Agent B's repo)
 2. ❌ **Never** modify files in `src/app/routes/admin/*` (that's Agent A's domain)
 3. ❌ **Never** use `any` type — create proper interfaces
 4. ❌ **Never** use `useEffect` for data fetching — use TanStack Query

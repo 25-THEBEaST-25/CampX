@@ -1,4 +1,4 @@
-# Unideal — Agent Rules & Coordination
+# CampX — Agent Rules & Coordination
 
 > **Last Updated**: 2026-02-26
 > **Agents**: 3 specialized agents + 1 human orchestrator
@@ -9,8 +9,8 @@
 
 | Agent | Name | Domain | Primary Repo | Color Tag | Instruction File |
 |---|---|---|---|---|---|
-| **F** | Frontend Agent | UI, components, pages, client-side integrations | `unideal-client` | 🟦 Blue | `.agents/frontend-agent.md` |
-| **B** | Backend Agent | API, database, server-side services, Prisma | `unideal-server` | 🟩 Green | `.agents/backend-agent.md` |
+| **F** | Frontend Agent | UI, components, pages, client-side integrations | `campx-client` | 🟦 Blue | `.agents/frontend-agent.md` |
+| **B** | Backend Agent | API, database, server-side services, Prisma | `campx-server` | 🟩 Green | `.agents/backend-agent.md` |
 | **A** | Admin/Integration Agent | Cross-repo work, admin panel, deployment, testing | Both repos | 🟧 Orange | `.agents/admin-agent.md` |
 
 > **Each agent has a dedicated instruction file** in `.agents/` with complete rules, code patterns, examples, and forbidden actions. Load the appropriate file at the start of every session.
@@ -84,29 +84,29 @@ Every agent session MUST begin by reading these files in order:
 
 ```
 Agent F owns:
-├── unideal-client/src/app/         # All pages except admin/*
-├── unideal-client/src/components/  # All components
-├── unideal-client/src/hooks/       # All hooks
-├── unideal-client/src/lib/         # Client utilities
-├── unideal-client/src/types/       # Shared frontend types
-├── unideal-client/src/styles/      # CSS
-└── unideal-client/public/          # Static assets
+├── campx-client/src/app/         # All pages except admin/*
+├── campx-client/src/components/  # All components
+├── campx-client/src/hooks/       # All hooks
+├── campx-client/src/lib/         # Client utilities
+├── campx-client/src/types/       # Shared frontend types
+├── campx-client/src/styles/      # CSS
+└── campx-client/public/          # Static assets
 
 Agent B owns:
-├── unideal-server/src/routes/      # All route handlers
-├── unideal-server/src/middleware/  # All middleware
-├── unideal-server/src/services/   # All service modules
-├── unideal-server/src/validators/ # Zod schemas
-├── unideal-server/src/lib/        # Server utilities
-├── unideal-server/src/types/      # Server types
-├── unideal-server/prisma/         # Schema + migrations + seed
-└── unideal-server/src/index.ts    # App entry
+├── campx-server/src/routes/      # All route handlers
+├── campx-server/src/middleware/  # All middleware
+├── campx-server/src/services/   # All service modules
+├── campx-server/src/validators/ # Zod schemas
+├── campx-server/src/lib/        # Server utilities
+├── campx-server/src/types/      # Server types
+├── campx-server/prisma/         # Schema + migrations + seed
+└── campx-server/src/index.ts    # App entry
 
 Agent A owns:
-├── unideal-client/src/app/routes/admin/*  # Admin panel pages
-├── unideal-client/vercel.json             # Deployment config
-├── unideal-server/railway.json            # Deployment config
-├── unideal-server/Dockerfile              # Docker config
+├── campx-client/src/app/routes/admin/*  # Admin panel pages
+├── campx-client/vercel.json             # Deployment config
+├── campx-server/railway.json            # Deployment config
+├── campx-server/Dockerfile              # Docker config
 ├── context.md                             # Project context
 ├── to-do.md                               # Plan updates
 ├── projectstatus.md                       # Status tracking
@@ -122,8 +122,8 @@ Agent A owns:
 
 When Agent B creates/modifies an API endpoint:
 1. Document the endpoint in `context.md` API table (or note it for Agent A to update)
-2. Define the request/response TypeScript types in `unideal-server/src/types/`
-3. Agent F must mirror these types in `unideal-client/src/types/`
+2. Define the request/response TypeScript types in `campx-server/src/types/`
+3. Agent F must mirror these types in `campx-client/src/types/`
 
 **Types must be kept in sync manually.** Any type change by Agent B must be flagged in `projectstatus.md` for Agent F to pick up.
 
@@ -199,7 +199,7 @@ Examples:
 
 | Role | Font Family | Weight | Usage |
 |---|---|---|---|
-| **Brand / Logo** | `Fairplay Display` | 700 (Bold) | "Unideal" wordmark, hero headings |
+| **Brand / Logo** | `Fairplay Display` | 700 (Bold) | "CampX" wordmark, hero headings |
 | **Body / UI** | `Poppins` | 300–600 | All other text — headings, body, buttons, captions |
 
 Load via Google Fonts:
@@ -216,7 +216,7 @@ fontFamily: {
 ```
 
 Usage:
-- `font-brand` — only for the "Unideal" logo text and major hero headings
+- `font-brand` — only for the "CampX" logo text and major hero headings
 - `font-sans` (default) — everything else (Poppins is the base font)
 
 ##### Gradient Buttons & Glow
@@ -472,9 +472,9 @@ When ending a session, every agent must write in `projectstatus.md`:
 ### Type Sync Protocol
 
 When backend changes a response shape:
-1. Agent B updates `unideal-server/src/types/index.ts`
+1. Agent B updates `campx-server/src/types/index.ts`
 2. Agent B notes in `projectstatus.md`: "TYPE CHANGE: Item response now includes `isFavorited: boolean`"
-3. Agent F picks this up and updates `unideal-client/src/types/index.ts`
+3. Agent F picks this up and updates `campx-client/src/types/index.ts`
 
 ### API Contract Freeze
 
@@ -532,7 +532,7 @@ If a task is growing beyond its planned scope:
 ### Agent B — First Session Setup
 ```bash
 # 1. Create repo
-mkdir unideal-server && cd unideal-server
+mkdir campx-server && cd campx-server
 git init
 npm init -y
 
@@ -556,8 +556,8 @@ npx prisma db seed
 ### Agent F — First Session Setup
 ```bash
 # 1. Create repo
-npm create vite@latest unideal-client -- --template react-ts
-cd unideal-client
+npm create vite@latest campx-client -- --template react-ts
+cd campx-client
 
 # 2. Install dependencies
 npm install @clerk/clerk-react @tanstack/react-query react-router-dom framer-motion ably mapbox-gl react-map-gl react-hook-form @hookform/resolvers zod sonner lucide-react date-fns clsx tailwind-merge class-variance-authority @radix-ui/react-slot

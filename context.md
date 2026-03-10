@@ -1,4 +1,4 @@
-# Unideal — Project Context
+# CampX — Project Context
 
 > **Last Updated**: 2025-07-24
 > **Version**: 2.0 (Complete Rewrite)
@@ -6,9 +6,9 @@
 
 ---
 
-## 1. What Is Unideal?
+## 1. What Is CampX?
 
-**Unideal** is a hyper-local, trust-first, peer-to-peer marketplace exclusively for university students. It enables buying, selling, and renting items (textbooks, electronics, furniture, sports gear, clothing, etc.) within and across campus communities.
+**CampX** is a hyper-local, trust-first, peer-to-peer marketplace exclusively for university students. It enables buying, selling, and renting items (textbooks, electronics, furniture, sports gear, clothing, etc.) within and across campus communities.
 
 ### Core Thesis
 
@@ -67,7 +67,7 @@ A centralized digital platform with:
 
 ## 3. Tech Stack
 
-### Frontend (`unideal-client` repo → Vercel)
+### Frontend (`campx-client` repo → Vercel)
 
 | Technology | Version | Purpose |
 |---|---|---|
@@ -90,7 +90,7 @@ A centralized digital platform with:
 | Zod | latest | Form validation schemas |
 | React Hook Form | latest | Form state management |
 
-### Backend (`unideal-server` repo → Railway)
+### Backend (`campx-server` repo → Railway)
 
 | Technology | Version | Purpose |
 |---|---|---|
@@ -130,7 +130,7 @@ A centralized digital platform with:
 ### Two Separate Repos (Independent Deployment)
 
 ```
-unideal-client/                    # Frontend → Vercel
+campx-client/                    # Frontend → Vercel
 ├── public/
 │   ├── favicon.ico
 │   ├── manifest.json
@@ -237,7 +237,7 @@ unideal-client/                    # Frontend → Vercel
 ├── vercel.json
 └── package.json
 
-unideal-server/                    # Backend → Railway
+campx-server/                    # Backend → Railway
 ├── src/
 │   ├── index.ts                   # Express app entry
 │   ├── routes/
@@ -830,24 +830,24 @@ Transaction starts → Conversation auto-created
 
 ## 8. Environment Variables
 
-### Client (`unideal-client/.env`)
+### Client (`campx-client/.env`)
 ```
 VITE_API_URL=http://localhost:5000
 VITE_CLERK_PUBLISHABLE_KEY=pk_test_...
 VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
-VITE_CLOUDINARY_UPLOAD_PRESET_ITEMS=unideal-items
-VITE_CLOUDINARY_UPLOAD_PRESET_AVATARS=unideal-avatars
-VITE_CLOUDINARY_UPLOAD_PRESET_IDS=unideal-ids
+VITE_CLOUDINARY_UPLOAD_PRESET_ITEMS=campx-items
+VITE_CLOUDINARY_UPLOAD_PRESET_AVATARS=campx-avatars
+VITE_CLOUDINARY_UPLOAD_PRESET_IDS=campx-ids
 VITE_ABLY_API_KEY=your_ably_key
 VITE_MAPBOX_ACCESS_TOKEN=pk.your_mapbox_token
 VITE_RAZORPAY_KEY_ID=rzp_test_...
 ```
 
-### Server (`unideal-server/.env`)
+### Server (`campx-server/.env`)
 ```
 PORT=5000
 NODE_ENV=development
-DATABASE_URL=postgresql://user:pass@host:5432/unideal
+DATABASE_URL=postgresql://user:pass@host:5432/campx
 CLERK_SECRET_KEY=sk_test_...
 CLERK_WEBHOOK_SECRET=whsec_...
 RAZORPAY_KEY_ID=rzp_test_...
@@ -867,9 +867,9 @@ FRONTEND_URL=http://localhost:5173
 
 | Use Case | Upload Preset | Max Size | Transformations | Access |
 |---|---|---|---|---|
-| Item images (up to 5) | `unideal-items` | 5MB | Auto-format, auto-quality, max 1200px, eager: 400px thumb | **Public** |
-| College ID card | `unideal-ids` | 5MB | None (keep original for admin review) | **Authenticated** (signed URLs) |
-| Profile avatars | `unideal-avatars` | 2MB | 200x200 crop, face detection, circle mask | **Public** |
+| Item images (up to 5) | `campx-items` | 5MB | Auto-format, auto-quality, max 1200px, eager: 400px thumb | **Public** |
+| College ID card | `campx-ids` | 5MB | None (keep original for admin review) | **Authenticated** (signed URLs) |
+| Profile avatars | `campx-avatars` | 2MB | 200x200 crop, face detection, circle mask | **Public** |
 
 ### Upload Flow (Client-Side Direct Upload)
 ```
@@ -889,7 +889,7 @@ User selects image → Cloudinary Upload Widget opens
 
 ## 10. What Changed from theoldrepo (CampusMarket)
 
-| Aspect | Old (CampusMarket) | New (Unideal) |
+| Aspect | Old (CampusMarket) | New (CampX) |
 |---|---|---|
 | Auth | Supabase Auth (email only) | Clerk (Google OAuth + email) |
 | Database | Supabase PostgreSQL (raw queries) | Railway PostgreSQL + Prisma ORM |

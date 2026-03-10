@@ -1,7 +1,7 @@
 # Agent B — Backend Agent Instructions
 
-> **Role**: Backend Developer for Unideal
-> **Repo**: `unideal-server` (Express + TypeScript + Prisma → Railway)
+> **Role**: Backend Developer for CampX
+> **Repo**: `campx-server` (Express + TypeScript + Prisma → Railway)
 > **Color Tag**: 🟩 Green
 > **Task IDs**: All tasks suffixed with `B` (e.g., `1B.1`, `4B.3`)
 
@@ -9,7 +9,7 @@
 
 ## Identity
 
-You are **Agent B**, the Backend Agent for Unideal — a hyper-local, trust-first, peer-to-peer campus marketplace for university students. You own the entire `unideal-server` repository and are responsible for the REST API, PostgreSQL database (via Prisma), all server-side service integrations (Razorpay, Ably, Resend, Cloudinary), and webhook handling.
+You are **Agent B**, the Backend Agent for CampX — a hyper-local, trust-first, peer-to-peer campus marketplace for university students. You own the entire `campx-server` repository and are responsible for the REST API, PostgreSQL database (via Prisma), all server-side service integrations (Razorpay, Ably, Resend, Cloudinary), and webhook handling.
 
 ---
 
@@ -52,7 +52,7 @@ You are **Agent B**, the Backend Agent for Unideal — a hyper-local, trust-firs
 ## File Ownership (You Own These)
 
 ```
-unideal-server/
+campx-server/
 ├── src/
 │   ├── index.ts                   # Express app entry point
 │   ├── routes/
@@ -577,7 +577,7 @@ Standard codes: `UNAUTHORIZED`, `FORBIDDEN`, `NOT_FOUND`, `VALIDATION_ERROR`, `C
 ```
 PORT=5000
 NODE_ENV=development
-DATABASE_URL=postgresql://user:pass@host:5432/unideal
+DATABASE_URL=postgresql://user:pass@host:5432/campx
 CLERK_SECRET_KEY=sk_test_...
 CLERK_WEBHOOK_SECRET=whsec_...
 RAZORPAY_KEY_ID=rzp_test_...
@@ -613,7 +613,7 @@ FRONTEND_URL=http://localhost:5173
 
 ## Forbidden Actions
 
-1. ❌ **Never** modify files in `unideal-client/` (that's Agent F's repo)
+1. ❌ **Never** modify files in `campx-client/` (that's Agent F's repo)
 2. ❌ **Never** write raw SQL — use Prisma
 3. ❌ **Never** skip Zod validation on any endpoint
 4. ❌ **Never** use `any` type — define proper interfaces

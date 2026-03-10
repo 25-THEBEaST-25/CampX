@@ -1,4 +1,4 @@
-# Unideal — Project Status
+# CampX — Project Status
 
 > **Last Updated**: 2025-07-24
 > **Current Phase**: Phase 7 COMPLETE — Admin Panel & Moderation
@@ -38,7 +38,7 @@
 ## Phase 1 — Foundation & Auth (COMPLETE)
 
 ### Backend Tasks (Agent B) — ✅ ALL COMPLETE
-- [x] **1B.1** — Initialize `unideal-server` repo (Express 5 + TS + ESLint)
+- [x] **1B.1** — Initialize `campx-server` repo (Express 5 + TS + ESLint)
 - [x] **1B.2** — Prisma setup: full schema (14 models), seed file (6 categories, 5 colleges, 1 admin)
 - [x] **1B.3** — Clerk webhook endpoint (`/api/webhooks/clerk`) — user.created, user.updated
 - [x] **1B.4** — `requireAuth` middleware using Clerk `verifyToken` + DB lookup
@@ -148,7 +148,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - [x] **4F.3** — Wallet page: AnimatedNumber for balance, frozen-in-escrow display, withdraw modal with amount validation, paginated transaction history with type filter tabs (All/In/Released/Out), icon + color-coded rows, load more pagination.
 - [x] **4F.4** — Payment status animations: ConfettiBurst (50 CSS particles + Framer Motion), PaymentProcessingDialog (spinning Loader2, no close button), PaymentSuccessDialog (spring-animated checkmark, escrow info, chat/transaction/browse CTAs), PaymentErrorDialog (shake animation + retry), AnimatedNumber (ease-out cubic counter).
 
-### Files Created (`unideal-client/src/`)
+### Files Created (`campx-client/src/`)
 - [x] `hooks/useWallet.ts` — useWallet (balance), useWalletHistory (infinite, type filter), useWithdraw (mutation)
 - [x] `hooks/useTransactions.ts` — useTransactions (list, status filter), useTransaction (detail), useConfirmReceipt (mutation), useDisputeTransaction (mutation)
 - [x] `hooks/useOrders.ts` — useCreateOrder (POST /api/orders/create), useVerifyPayment (POST /api/payments/verify)
@@ -156,7 +156,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - [x] `components/payments/PaymentAnimations.tsx` — ConfettiBurst, PaymentProcessingDialog, PaymentSuccessDialog, PaymentErrorDialog, AnimatedNumber
 - [x] `components/payments/RentDatePicker.tsx` — Date range dialog with price calculation
 
-### Files Modified (`unideal-client/src/`)
+### Files Modified (`campx-client/src/`)
 - [x] `types/index.ts` — Added CreateOrderInput, CreateOrderResponse, VerifyPaymentInput, VerifyPaymentResponse, WithdrawInput, WalletInfo, WalletHistoryResponse; enriched Transaction with buyer/seller/hasReviewed/conversationId/disputeReason
 - [x] `lib/constants.ts` — Added TRANSACTION_STATUS_LABELS, TRANSACTION_STATUS_COLORS, WALLET_TX_LABELS, WALLET_TX_ICONS
 - [x] `hooks/index.ts` — Barrel exports for all 9 new hooks
@@ -192,12 +192,12 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - [x] **5B.5** — Email notification templates: Added 5 new templates to `services/resend.ts` — `sendNewMessageEmail`, `sendIdVerifiedEmail`, `sendIdRejectedEmail`, `sendDisputeEmail`, `sendTransactionSettledEmail` (role-aware buyer/seller).
 - [x] **5B.6** — Notification preferences: Added `notificationPreferences Json?` field to User model in Prisma schema. `GET /api/users/me/notification-preferences` (returns merged defaults + user prefs). `PUT /api/users/me/notification-preferences` (deep merge incoming with current, stores as JSON). Default prefs: all inApp ON, all email ON except NEW_MESSAGE email OFF.
 
-### Files Created (`unideal-server/src/`)
+### Files Created (`campx-server/src/`)
 - [x] `routes/conversations.ts` — 3 endpoints (~410 lines): list conversations with unread counts, get messages paginated, send message with Ably publish + notification
 - [x] `routes/notifications.ts` — 3 endpoints (~180 lines): list paginated notifications, mark as read (batch/all), delete single
 - [x] `routes/ably.ts` — 1 endpoint (~20 lines): POST /api/ably/token for client-side Ably auth
 
-### Files Modified (`unideal-server/src/`)
+### Files Modified (`campx-server/src/`)
 - [x] `services/ably.ts` — Added `createTokenRequest(clientId)` with scoped capabilities
 - [x] `services/resend.ts` — Added 5 new email template functions
 - [x] `routes/users.ts` — Added `unreadNotificationCount` to GET /me, added GET/PUT `/me/notification-preferences` endpoints with Zod validation
@@ -236,7 +236,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - [x] **5F.5** — Notification bell + panel: NotificationBell (animated unread badge, outside-click dismiss), NotificationPanel dropdown (type-based icons, mark-all-read, individual delete, click-to-navigate, load-more, settings link). Integrated into Navbar.
 - [x] **5F.6** — Notification preferences: Settings page notification section with per-type email/inApp toggles (Switch components), loading skeleton, error state. RootLayout global Ably connection + real-time notification subscription.
 
-### Hooks Created (`unideal-client/src/hooks/`)
+### Hooks Created (`campx-client/src/hooks/`)
 - [x] `useChat.ts` — useConversations (30s poll), useMessages (infinite, newest first), useSendMessage, useRealtimeMessages (Ably subscription → cache update), useAblyConnection, useRealtimeNotifications, useOptimisticMessage
 - [x] `useNotifications.ts` — useNotifications (infinite, cursor), useUnreadCount (30s poll), useMarkNotificationsRead (batch/all), useDeleteNotification, useNotificationPreferences, useUpdateNotificationPreferences
 
@@ -251,11 +251,11 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - [x] **6B.4** — Report endpoint: `POST /api/reports` (requires reportedUserId or reportedItemId, validates targets exist, prevents duplicate pending reports, notifies all admins). Admin endpoints `GET /admin/reports` + `PATCH /admin/reports/:id` already existed from Phase 7 pre-build.
 - [x] **6B.5** — Enhanced listings & transactions: Already implemented — `GET /api/users/me/items` includes viewCount + `_count.favorites`; `GET /api/transactions` includes `hasReviewed` boolean. Added `sellerId` query param to `GET /api/items` browse for public profile page support.
 
-### Files Created (`unideal-server/src/`)
+### Files Created (`campx-server/src/`)
 - [x] `routes/reviews.ts` — 2 endpoints (~245 lines): POST create review (with notification + email), GET user reviews (cursor-paginated + aggregates)
 - [x] `routes/reports.ts` — 1 endpoint (~170 lines): POST create report (with admin notification)
 
-### Files Modified (`unideal-server/src/`)
+### Files Modified (`campx-server/src/`)
 - [x] `index.ts` — Registered `/api/reviews` and `/api/reports` route groups
 - [x] `validators/item.ts` — Added `sellerId` optional param to `browseItemsQuerySchema`
 - [x] `routes/items.ts` — Added `sellerId` filter to browse where clause
@@ -281,7 +281,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - [x] **6F.5** — Settings page enhancements: Edit profile section with avatar upload (Cloudinary avatars preset), name + phone inputs, save via `PUT /api/users/me` with change detection + success feedback
 - [x] **6F.6** — Dashboard review prompts: "Leave a Review" banner for settled unreviewed transactions with inline `ReviewForm` components
 
-### Files Created (`unideal-client/src/`)
+### Files Created (`campx-client/src/`)
 - [x] `hooks/useReviews.ts` — `useUserReviews` (infinite query), `useSubmitReview` (mutation)
 - [x] `hooks/useReports.ts` — `useSubmitReport` (mutation)
 - [x] `hooks/usePublicProfile.ts` — `usePublicProfile` (query), `useUpdateProfile` (mutation)
@@ -290,7 +290,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - [x] `components/reviews/ReviewForm.tsx` — Star rating + comment form with success animation
 - [x] `components/ReportModal.tsx` — Reusable report dialog for users and items
 
-### Files Modified (`unideal-client/src/`)
+### Files Modified (`campx-client/src/`)
 - [x] `types/index.ts` — Added `PublicProfile`, `ReviewsResponse`, `CreateReviewInput`, `CreateReportInput`, `UpdateProfileInput` interfaces; added `sellerId` to `ItemFilters`
 - [x] `lib/constants.ts` — Added `REPORT_REASON_LABELS` and `REPORT_REASONS`
 - [x] `hooks/index.ts` — Added barrel exports for useReviews, useReports, usePublicProfile
@@ -357,8 +357,8 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 | Repo | Status | URL | Branch | Last Deploy |
 |---|---|---|---|---|
-| `unideal-client` | ⬜ Not Created | — | — | — |
-| `unideal-server` | ⬜ Not Created | — | — | — |
+| `campx-client` | ⬜ Not Created | — | — | — |
+| `campx-server` | ⬜ Not Created | — | — | — |
 
 ---
 
@@ -412,7 +412,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 **Completed Tasks**: All Phase 1 frontend + All Phase 2 frontend tasks
 
-**Files Created** (`unideal-client/src/`):
+**Files Created** (`campx-client/src/`):
 - `main.tsx` — App entry: StrictMode → ClerkProvider → QueryClientProvider → Toaster → App
 - `app/App.tsx` — BrowserRouter with lazy-loaded routes, ApiTokenSetup
 - `app/layout/RootLayout.tsx` — Navbar + AnimatePresence + Footer + MobileNav
@@ -455,17 +455,17 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 **Completed Tasks**: DevOps setup + 2A.1 (admin API routes) + 2A.2 (admin middleware prep) + Phase 7 admin pages (pre-built)
 
 **Files Created/Modified**:
-- `unideal-server/railway.json` — Fixed startCommand to `npx prisma migrate deploy && node dist/index.js`
-- `unideal-server/Dockerfile` — Multi-stage Docker build for Railway (node:20-alpine)
-- `unideal-server/src/routes/admin.ts` — Complete admin API: stats, verifications (list + approve/reject), users (list + ban/unban/force-verify), reports (list + action/dismiss), transactions (list + refund/release), colleges (create + update). All routes use requireAuth + requireAdmin middleware and Zod validation.
-- `unideal-client/vercel.json` — Updated with security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
-- `unideal-client/src/app/layout/AdminLayout.tsx` — Sidebar layout with Clerk admin gate, responsive mobile drawer, 6 nav items
-- `unideal-client/src/app/routes/admin/AdminDashboard.tsx` — Stats grid (6 metrics), quick-link cards, auto-refresh 60s
-- `unideal-client/src/app/routes/admin/VerificationQueue.tsx` — Table with search/filter/pagination, image lightbox, approve/reject with confirmation dialogs
-- `unideal-client/src/app/routes/admin/UserManagement.tsx` — User table with ban/unban/force-verify dropdown, confirmation dialogs
-- `unideal-client/src/app/routes/admin/ListingModeration.tsx` — Listing table with preview dialog, archive action
-- `unideal-client/src/app/routes/admin/TransactionManagement.tsx` — Transaction table with refund/release intervention
-- `unideal-client/src/app/routes/admin/ReportsQueue.tsx` — Reports table with take-action/dismiss, admin notes
+- `campx-server/railway.json` — Fixed startCommand to `npx prisma migrate deploy && node dist/index.js`
+- `campx-server/Dockerfile` — Multi-stage Docker build for Railway (node:20-alpine)
+- `campx-server/src/routes/admin.ts` — Complete admin API: stats, verifications (list + approve/reject), users (list + ban/unban/force-verify), reports (list + action/dismiss), transactions (list + refund/release), colleges (create + update). All routes use requireAuth + requireAdmin middleware and Zod validation.
+- `campx-client/vercel.json` — Updated with security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
+- `campx-client/src/app/layout/AdminLayout.tsx` — Sidebar layout with Clerk admin gate, responsive mobile drawer, 6 nav items
+- `campx-client/src/app/routes/admin/AdminDashboard.tsx` — Stats grid (6 metrics), quick-link cards, auto-refresh 60s
+- `campx-client/src/app/routes/admin/VerificationQueue.tsx` — Table with search/filter/pagination, image lightbox, approve/reject with confirmation dialogs
+- `campx-client/src/app/routes/admin/UserManagement.tsx` — User table with ban/unban/force-verify dropdown, confirmation dialogs
+- `campx-client/src/app/routes/admin/ListingModeration.tsx` — Listing table with preview dialog, archive action
+- `campx-client/src/app/routes/admin/TransactionManagement.tsx` — Transaction table with refund/release intervention
+- `campx-client/src/app/routes/admin/ReportsQueue.tsx` — Reports table with take-action/dismiss, admin notes
 
 **Dependencies on Other Agents**:
 - **Agent B**: admin.ts imports `@/lib/prisma`, `@/middleware/auth` (requireAuth, requireAdmin), `@/middleware/validate` — must be created in Phase 1B
@@ -489,12 +489,12 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 **Completed Tasks**: 3B.1 (Item CRUD), 3B.2 (Browse+search+pagination), 3B.3 (Favorites), 3B.4 (User listings — pre-existing), requireVerified middleware
 
 **Files Created**:
-- `unideal-server/src/routes/items.ts` — Full item CRUD + browse endpoint with search, category/college/type/condition/price filters, cursor-based pagination, optional isFavorited for authenticated users, view count increment (fire-and-forget), related items in detail, Cloudinary image cleanup on delete/update, `requireVerified` gate on create
-- `unideal-server/src/routes/favorites.ts` — GET paginated favorites, POST upsert add, DELETE remove
+- `campx-server/src/routes/items.ts` — Full item CRUD + browse endpoint with search, category/college/type/condition/price filters, cursor-based pagination, optional isFavorited for authenticated users, view count increment (fire-and-forget), related items in detail, Cloudinary image cleanup on delete/update, `requireVerified` gate on create
+- `campx-server/src/routes/favorites.ts` — GET paginated favorites, POST upsert add, DELETE remove
 
 **Files Modified**:
-- `unideal-server/src/middleware/auth.ts` — Added `requireVerified` middleware export (checks `verificationStatus === "VERIFIED"`, returns 403 + `NOT_VERIFIED`)
-- `unideal-server/src/index.ts` — Registered `/api/items` (itemRoutes) and `/api/favorites` (favoriteRoutes)
+- `campx-server/src/middleware/auth.ts` — Added `requireVerified` middleware export (checks `verificationStatus === "VERIFIED"`, returns 403 + `NOT_VERIFIED`)
+- `campx-server/src/index.ts` — Registered `/api/items` (itemRoutes) and `/api/favorites` (favoriteRoutes)
 
 **Technical Notes for Agent F**:
 - Browse endpoint accepts query params: `cursor`, `limit`, `category` (slug), `college` (slug), `type`, `condition`, `priceMin`, `priceMax`, `search`, `sort` (newest|oldest|price_low|price_high)
@@ -520,7 +520,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 **Completed Tasks**: All Phase 3 frontend tasks (3F.1–3F.4) + All Phase 4 frontend tasks (4F.1–4F.4)
 
-**Files Created** (`unideal-client/src/`):
+**Files Created** (`campx-client/src/`):
 - `hooks/useWallet.ts` — useWallet, useWalletHistory (infinite), useWithdraw (mutation)
 - `hooks/useTransactions.ts` — useTransactions (list+filter), useTransaction (detail), useConfirmReceipt, useDisputeTransaction
 - `hooks/useOrders.ts` — useCreateOrder, useVerifyPayment
@@ -528,7 +528,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - `components/payments/PaymentAnimations.tsx` — ConfettiBurst, PaymentProcessingDialog, PaymentSuccessDialog, PaymentErrorDialog, AnimatedNumber
 - `components/payments/RentDatePicker.tsx` — Date range dialog with rental price calculation
 
-**Files Modified** (`unideal-client/src/`):
+**Files Modified** (`campx-client/src/`):
 - `types/index.ts` — Added 8 new interfaces (CreateOrderInput, CreateOrderResponse, VerifyPaymentInput, VerifyPaymentResponse, WithdrawInput, WalletInfo, WalletHistoryResponse, Review); enriched Transaction with buyer/seller/conversationId/disputeReason/hasReviewed
 - `lib/constants.ts` — Added TRANSACTION_STATUS_LABELS/COLORS, WALLET_TX_LABELS/ICONS
 - `hooks/index.ts` — Barrel exports for 9 new hooks
@@ -562,7 +562,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 **Completed Tasks**: 4B.1–4B.8 + webhook handler (all Razorpay payments, escrow management, transactions, wallet endpoints)
 
-**Files Created** (`unideal-server/src/routes/`):
+**Files Created** (`campx-server/src/routes/`):
 - `orders.ts` — `POST /api/orders/create` (~180 lines): Razorpay order creation with sell/rent amount calc, duplicate-order prevention, PENDING transaction row
 - `payments.ts` — `POST /api/payments/verify` + `POST /api/webhooks/razorpay` (~260 lines): Signature verification, atomic escrow (PENDING→RESERVED), auto-create Conversation + system Message, webhook safety nets for payment.captured/failed/refund.created
 - `transactions.ts` — 4 endpoints (~310 lines): GET list (status filter, enriched with hasReviewed/conversationId/disputeReason/platformFee/sellerPayout), GET detail, POST confirm-receipt (escrow release, RESERVED→SETTLED), POST dispute (RESERVED→DISPUTED, admin notification)
@@ -606,14 +606,14 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 **Completed Tasks**: Admin route registration, service implementations, full TypeScript error cleanup across both repos
 
-**Files Created** (`unideal-client/src/`):
+**Files Created** (`campx-client/src/`):
 - `components/ui/alert-dialog.tsx` — Full shadcn AlertDialog component (needed by all 4 admin management pages)
 
-**Files Created** (`unideal-server/src/`):
+**Files Created** (`campx-server/src/`):
 - `services/resend.ts` — Email service with 4 functions: sendVerificationApprovedEmail, sendVerificationRejectedEmail, sendPaymentSecuredEmail, sendFundsReleasedEmail (using Resend SDK)
 - `services/ably.ts` — Ably REST client with publishToChannel and getAblyClient (used by notification.ts)
 
-**Files Modified** (`unideal-client/src/`):
+**Files Modified** (`campx-client/src/`):
 - `app/App.tsx` — Registered all 6 admin routes under `<AdminLayout>` with lazy loading (default exports), removed unused Navigate import
 - `app/routes/Verification.tsx` — Added missing Label import, removed unused handleResubmit
 - `app/routes/SellItem.tsx` — Removed unused Select/Badge/UploadedImage imports, fixed slug destructuring
@@ -629,7 +629,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - `hooks/useFavorites.ts` — Removed unused useQuery import
 - `hooks/useWallet.ts` — Removed unused WalletTransaction type import
 
-**Packages Installed**: `@radix-ui/react-alert-dialog` (unideal-client)
+**Packages Installed**: `@radix-ui/react-alert-dialog` (campx-client)
 
 **Cross-Agent Requests Resolved**: ✅ Admin routes registered in React Router under `<AdminLayout>`
 
@@ -646,12 +646,12 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 **Completed Tasks**: 5B.1–5B.6 (Ably token auth, conversation endpoints, message send + Ably publish, notification CRUD, email templates, notification preferences)
 
-**Files Created** (`unideal-server/src/`):
+**Files Created** (`campx-server/src/`):
 - `routes/conversations.ts` — 3 endpoints: list conversations (with unread counts, other user info, last message preview), get messages (cursor-paginated, auto-mark read), send message (DB + Ably publish + notification)
 - `routes/notifications.ts` — 3 endpoints: list paginated notifications, mark as read (batch/all), delete single notification
 - `routes/ably.ts` — Ably token request endpoint for client-side auth
 
-**Files Modified** (`unideal-server/src/`):
+**Files Modified** (`campx-server/src/`):
 - `services/ably.ts` — Added `createTokenRequest(clientId)` with scoped channel capabilities
 - `services/resend.ts` — Added 5 email templates (newMessage, idVerified, idRejected, dispute, transactionSettled)
 - `routes/users.ts` — Added unreadNotificationCount to GET /me, GET/PUT notification-preferences endpoints
@@ -684,7 +684,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 **Completed Tasks**: 5F.1–5F.6 (Ably client, chat page, message thread, chat input + location, notification bell + panel, notification preferences)
 
-**Files Created** (`unideal-client/src/`):
+**Files Created** (`campx-client/src/`):
 - `lib/ably.ts` — Ably Realtime client singleton with token auth (authCallback → POST /api/ably/token), connect/disconnect/subscribe helpers
 - `hooks/useChat.ts` — 7 hooks: useConversations, useMessages (infinite), useSendMessage, useRealtimeMessages, useAblyConnection, useRealtimeNotifications, useOptimisticMessage
 - `hooks/useNotifications.ts` — 6 hooks: useNotifications (infinite), useUnreadCount, useMarkNotificationsRead, useDeleteNotification, useNotificationPreferences, useUpdateNotificationPreferences
@@ -696,7 +696,7 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 - `components/notifications/NotificationPanel.tsx` — Notification dropdown with mark-all-read, per-item delete, type-based icons, click-to-navigate, load-more, settings link
 - `components/ui/switch.tsx` — shadcn Switch component (Radix UI)
 
-**Files Modified** (`unideal-client/src/`):
+**Files Modified** (`campx-client/src/`):
 - `types/index.ts` — Fixed Conversation/Message types to match backend API (content not body, ablyChannelName, transactionStatus). Added MessageType, ConversationDetail, SendMessageInput, NotificationPreferences interfaces.
 - `hooks/index.ts` — Added barrel exports for all 13 new hooks
 - `app/routes/Chat.tsx` — Full rewrite: conversation sidebar + message thread + real-time subscriptions + ChatInput + mobile responsive layout
@@ -716,11 +716,11 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 **Completed Tasks**: 6B.1 (Review endpoints), 6B.2 (Public profile — pre-existing), 6B.3 (Profile update — pre-existing), 6B.4 (Report endpoint), 6B.5 (Enhanced listings — pre-existing + sellerId filter added)
 
-**Files Created** (`unideal-server/src/`):
+**Files Created** (`campx-server/src/`):
 - `routes/reviews.ts` — POST /api/reviews (create review with validation: SETTLED transaction, reviewer is buyer/seller, unique constraint, notification + email) + GET /api/reviews/user/:id (cursor-paginated reviews with aggregate avgRating/totalReviews)
 - `routes/reports.ts` — POST /api/reports (create report with target validation, duplicate prevention, admin notifications)
 
-**Files Modified** (`unideal-server/src/`):
+**Files Modified** (`campx-server/src/`):
 - `index.ts` — Registered `/api/reviews` (reviewRoutes) and `/api/reports` (reportRoutes)
 - `validators/item.ts` — Added `sellerId: z.string().optional()` to browseItemsQuerySchema
 - `routes/items.ts` — Added sellerId filter in browse endpoint where clause
@@ -754,10 +754,10 @@ Each item: `{ id, title, images, listingType, sellPrice, rentPricePerDay, condit
 
 **Completed Tasks**: Phase 7 audit, CollegeManagement page (7F.6), route + sidebar wiring, type sync fixes, context.md endpoint audit + update, projectstatus.md update
 
-**Files Created** (`unideal-client/src/`):
+**Files Created** (`campx-client/src/`):
 - `app/routes/admin/CollegeManagement.tsx` — Full admin college management page (~400 lines): college card list with logo/domain/city/user counts, create/edit dialog form with auto-slug generation, toggle active/inactive with AlertDialog confirmation, summary stat cards (total/active/inactive/users), loading/error/empty states
 
-**Files Modified** (`unideal-client/src/`):
+**Files Modified** (`campx-client/src/`):
 - `app/App.tsx` — Added lazy import for CollegeManagement + route `<Route path="colleges" element={<CollegeManagement />} />` under admin routes
 - `app/layout/AdminLayout.tsx` — Added GraduationCap icon import + "Colleges" nav item in sidebar
 - `types/index.ts` — 4 type sync fixes: (1) Added ReportStatus type union, (2) Added campusBoundary?: unknown to College, (3) Removed invalid updatedAt from Verification, (4) Added full Report interface
