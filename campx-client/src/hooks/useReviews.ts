@@ -2,8 +2,7 @@
 // Hook: useReviews — submit review, fetch user reviews
 // ============================================
 
-import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query"
-import { useAuth } from "@/contexts/AuthContext"
+import { useMutation, useQueryClient, useInfiniteQuery } from "@tanstack/react-query"
 import { api } from "@/lib/api"
 import type { Review, ReviewsResponse, CreateReviewInput } from "@/types"
 

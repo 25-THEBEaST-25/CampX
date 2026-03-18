@@ -24,7 +24,6 @@
     "@radix-ui/react-tooltip": "^1.x",
     "@tanstack/react-query": "^5.x",
     "@tanstack/react-query-devtools": "^5.x",
-    "@types/mapbox-gl": "^3.4.1",
     "ably": "^2.18.0",
     "class-variance-authority": "^0.7.x",
     "clsx": "^2.x",
@@ -41,6 +40,9 @@
     "tailwind-merge": "^2.x",
     "tailwindcss-animate": "^1.x",
     "zod": "^3.x"
+  },
+  "overrides": {
+    "@types/mapbox__point-geometry": "npm:@mapbox/point-geometry@*"
   },
   "devDependencies": {
     "@types/node": "^20.x",

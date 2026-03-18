@@ -2,13 +2,12 @@
 // NotificationPanel — dropdown list of notifications
 // ============================================
 
-import { Fragment, useCallback } from "react"
+import { useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
 import {
   Bell,
   BellOff,
-  Check,
   CheckCheck,
   Trash2,
   Loader2,

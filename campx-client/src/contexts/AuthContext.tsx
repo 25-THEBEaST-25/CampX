@@ -7,7 +7,6 @@ import {
   type ReactNode,
 } from "react"
 import { api, ApiError } from "@/lib/api"
-import type { UserProfile } from "@/types"
 
 // ── Types ──────────────────────────────────────────────────────────────────
 

@@ -6,7 +6,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { useSearchParams, Link, useNavigate } from "react-router-dom"
+import { useSearchParams, Link } from "react-router-dom"
 import { toast } from "sonner"
 import { Loader2, Eye, EyeOff, CheckCircle2, XCircle } from "lucide-react"
 
@@ -34,7 +34,6 @@ type ResetForm = z.infer<typeof schema>
 
 export function ResetPassword() {
   const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
   const token = searchParams.get("token")
   const [showPassword, setShowPassword] = useState(false)
   const [success, setSuccess] = useState(false)

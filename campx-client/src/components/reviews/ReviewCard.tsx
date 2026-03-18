@@ -84,7 +84,7 @@ export function ReviewCard({ review, index = 0 }: ReviewCardProps) {
             to={`/items/${review.transaction.item.id}`}
             className="text-xs text-zinc-500 hover:text-purple-400 transition-colors"
           >
-            {review.transaction.type === "PURCHASE" ? "Purchased" : "Rented"}:{" "}
+            {review.transaction.type === "BUY" ? "Purchased" : "Rented"}:{" "}
             {review.transaction.item.title}
           </Link>
         </div>

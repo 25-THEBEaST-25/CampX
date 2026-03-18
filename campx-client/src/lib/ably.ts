@@ -23,7 +23,7 @@ export function getAblyClient(): Ably.Realtime {
         )
         callback(null, tokenRequest)
       } catch (err) {
-        callback(err as Error, null)
+        callback(String(err), null)
       }
     },
     autoConnect: false,
