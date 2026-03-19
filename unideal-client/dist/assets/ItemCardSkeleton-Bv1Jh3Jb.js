@@ -1,1 +1,0 @@
-import{j as s,w as e}from"./index-afO8EdP7.js";function r(){return s.jsxs("div",{className:"rounded-xl border border-border bg-card overflow-hidden",children:[s.jsx(e,{className:"aspect-square w-full"}),s.jsxs("div",{className:"p-3 space-y-2",children:[s.jsx(e,{className:"h-4 w-3/4"}),s.jsx(e,{className:"h-5 w-1/2"}),s.jsx(e,{className:"h-3 w-2/3"})]})]})}export{r as I};

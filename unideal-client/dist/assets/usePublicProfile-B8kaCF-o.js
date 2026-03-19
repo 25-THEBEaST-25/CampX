@@ -1,1 +1,0 @@
-import{I as r,p as s,n as a,o as u}from"./index-afO8EdP7.js";function t(e){return r({queryKey:["publicProfile",e],queryFn:()=>u.get(`/api/users/${e}`),enabled:!!e})}function o(){const e=s();return a({mutationFn:i=>u.put("/api/users/me",i),onSuccess:()=>{e.invalidateQueries({queryKey:["userProfile"]}),e.invalidateQueries({queryKey:["publicProfile"]})}})}export{o as a,t as u};
