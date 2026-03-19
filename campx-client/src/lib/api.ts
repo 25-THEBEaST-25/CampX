@@ -21,7 +21,7 @@ class ApiClient {
   private refreshPromise: Promise<boolean> | null = null
 
   constructor() {
-    this.baseUrl = import.meta.env.VITE_API_URL ?? "http://localhost:5001"
+    this.baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5001"
   }
 
   /**
